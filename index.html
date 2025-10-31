@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinayak Garden - Bankura's Premier AC Banquet Hall & Open Lawn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            position: relative; /* Added to create stacking context */
+            isolation: isolate; /* Added to ensure z-index works correctly */
+        }
+
+        body::before {
+            content: "";
+            position: fixed; /* Stays in place during scroll */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Sits behind all other content */
+            
+            /* --- Image Updated --- */
+            /* Note: This background image will only load if 'Vinayak Bgphoto.png' is in the same folder */
+            background-image: url('Vinayak Bgphoto.png');
+            background-size: cover;
+            background-position: center;
+            
+            /* This creates the "transparent" effect */
+            opacity: 0.15; 
+        }
+
+        /* --- NEW: Scroll Animation Classes --- */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            will-change: opacity, transform; /* Performance optimization */
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* --- End of New Classes --- */
+
+
+        /* Navigation */
+        nav {
+            background: #520000; /* Changed */
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section */
+        .hero {
+             /* Note: This background image will only load if 'hero-background.png' is in the same folder */
+            background: url('hero-background.png'); /* Removed black overlay */
+            background-size: cover; /* Makes the image fill the space */
+            background-position: center center; /* Centers the image */
+            background-attachment: fixed; /* Creates a cool "parallax" scrolling effect */
+            padding: 6rem 2rem;
+            text-align: center;
+            /* Added for centering the new content box */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh; /* Give it height */
+        }
+
+        /* --- NEW: Frosted Glass UI for Hero Content --- */
+        .hero-content {
+            background: rgba(255, 255, 255, 0.6); /* Semi-transparent white background */
+            backdrop-filter: blur(10px); /* The "frosted glass" effect */
+            -webkit-backdrop-filter: blur(10px); /* Safari support */
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+            color: #520000; /* Set text color here */
+            max-width: 900px;
+            animation: fadeIn .8s ease-out; /* Add fade-in animation */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* --- End of New UI --- */
+
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: none; /* Removed shadow, not needed on solid bg */
+            font-family: 'Anaktoria', serif;
+        }
+
+        .hero .offer-badge {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background: #520000; /* Changed */
+            color: white; /* Changed */
+            font-weight: bold;
+        }
+
+        /* --- UPDATED "Call Now" Button --- */
+        .btn-secondary {
+            background: transparent;
+            color: #520000; /* Changed from white */
+            border: 2px solid #520000; /* Changed from white */
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+             background: #3a0000; /* Darker maroon on hover */
+        }
+
+        .btn-secondary:hover {
+            background: rgba(82, 0, 0, 0.1); /* Light maroon fill on hover */
+        }
+
+
+        /* Sections */
+        section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #520000; /* Changed */
+        }
+
+        /* Gallery */
+        .gallery-section {
+            margin-bottom: 3rem;
+        }
+
+        .gallery-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #520000; /* Changed */
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background: #f0f0f0;
+            aspect-ratio: 4/3;
+            /* --- NEW: Hover Transition --- */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            /* --- NEW: Hover "Lift" Effect --- */
+            transform: scale(1.03) translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-item img { /* Added style for images */
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures images cover the area without distortion */
+            display: block;
+        }
+
+        .gallery-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #520000; /* Changed */
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+            padding: 1.5rem 1rem 1rem;
+            font-weight: 600;
+        }
+
+        /* Specifications */
+        .specs-container {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .spec-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            /* --- NEW: Hover Transition --- */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        /* --- NEW: Hover "Lift" Effect --- */
+        .spec-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .spec-box h3 {
+            color: #520000; /* Changed */
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #520000; /* Changed */
+            padding-bottom: 0.5rem;
+        }
+
+        .spec-box h4 {
+            color: #520000; /* Changed */
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .spec-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .spec-box li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .spec-box li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #520000; /* Changed */
+            font-weight: bold;
+        }
+
+        /* Contact Form */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .contact-info {
+            background: #520000; /* Changed */
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .contact-item {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+        }
+
+        .contact-item strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .booking-form {
+            background: #f5f7fa;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #520000; /* Changed */
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #520000; /* Changed */
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Floating CTA Button */
+        .floating-cta {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .floating-btn {
+            background: #520000; /* Changed */
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 5px 20px rgba(82, 0, 0, 0.4); /* Changed */
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .floating-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(82, 0, 0, 0.6); /* Changed */
+        }
+
+        .floating-btn.call-btn {
+            background: #ff6b6b;
+            animation: wiggle 3s infinite;
+        }
+
+        @keyframes wiggle {
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(5deg);
+            }
+            75% {
+                transform: rotate(-5deg);
+            }
+        }
+
+        .offer-banner {
+            background: linear-gradient(135deg, #ff6b6b 0%, #f49e12 100%); /* Changed */
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 60vh;
+                padding: 4rem 1rem;
+            }
+            .hero-content {
+                padding: 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero p {
+                font-size: 1.2rem;
+            }
+            .hero .offer-badge {
+                font-size: 1rem;
+                padding: 0.6rem 1.5rem;
+            }
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            nav ul {
+                gap: 1rem;
+            }
+            section {
+                padding: 3rem 1rem;
+            }
+            .floating-cta {
+                bottom: 20px;
+                right: 20px;
+            }
+            .floating-btn {
+                padding: 0.8rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        .success-message {
+            background: #4caf50;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="offer-banner">
+        🎉 INAUGURAL SPECIAL: First 10 Bookings Get 20% OFF - Limited Time Only! 🎉
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#virtual-tour">Virtual Tour</a></li>
+            <li><a href="#venue">Venue Details</a></li>
+            <li><a href="#contact">Book Now</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <!-- --- NEW Wrapper Div --- --><div class="hero-content">
+            <h1>Vinayak Garden(Banquet Hall)</h1>
+            <div class="offer-badge">🎉 INAUGURAL OFFER: First 10 Bookings Get 20% OFF!</div>
+            <p>Bankura's Premier AC Banquet Hall & Open Lawn</p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">📅 Book Now & Save 20%</a>
+                <!-- 1. Fixed typo from +9I to +91 -->
+                <a href="tel:+916294283423" class="btn btn-secondary">📞 Call Now: +91 6294283423</a>
+            </div>
+            <p style="margin-top: 1.5rem; font-size: 1rem; opacity: 0.9;">⏰ Limited Time Offer - Only 10 Spots Available!</p>
+        </div>
+        <!-- --- End Wrapper Div --- --></section>
+
+    <section id="gallery">
+        <h2 class="animate-on-scroll">Explore Our Venue</h2>
+
+        <div class="gallery-section animate-on-scroll">
+            <h3>The Main AC Hall</h3>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <!-- This image will appear broken in preview -->
+                    <img src="1.jpg" alt="Grand AC Hall View from Entrance" onerror="this.parentElement.innerHTML = '<div class=\'gallery-placeholder\'>Image Missing:<br>1.jpg</div>';">
+                    <div class="gallery-caption">Grand AC Hall (View from Entrance)</div>
+                </div>
+                <div class="gallery-item">
+                     <!-- This image will appear broken in preview -->
+                    <img src="8.jpg" alt="Spacious 300-Guest Seated Layout" onerror="this.parentElement.innerHTML = '<div class=\'gallery-placeholder\'>Image Missing:<br>8.jpg</div>';">
+                    <div class="gallery-caption">Spacious 300-Guest Seated Layout</div>
+                </div>
+                <div class="gallery-item">
+                     <!-- This image will appear broken in preview -->
+                    <img src="5.jpg" alt="Elegant Stage Perfect for Wedding Receptions" onerror="this.parentElement.innerHTML = '<div class=\'gallery-placeholder\'>Image Missing:<br>5.jpg</div>';">
+                    <div class="gallery-caption">Elegant Stage (Perfect for Wedding Receptions)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="gallery-section animate-on-scroll">
+            <h3>The Open-Air Lawn</h3>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                     <!-- This image will appear broken in preview -->
+                    <img src="7.jpg" alt="Lush Open-Air Lawn Ideal for Sangeet & Buffets" onerror="this.parentElement.innerHTML = '<div class=\'gallery-placeholder\'>Image Missing:<br>7.jpg</div>';">
+                    <div class="gallery-caption">Lush Open-Air Lawn (Ideal for Sangeet & Buffets)</div>
+                </div>
+                <div class="gallery-item">
+                     <!-- This image will appear broken in preview -->
+                    <img src="6.jpg" alt="Evening Ambiance with Full Lighting" onerror="this.parentElement.innerHTML = '<div class=\'gallery-placeholder\'>Image Missing:<br>6.jpg</div>';">
+                    <div class="gallery-caption">Evening Ambiance with Full Lighting</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="gallery-section animate-on-scroll">
+            <h3>Amenities & Facilities</h3>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">Clean & Modern<br>Washrooms</div>
+                    <div class="gallery-caption">Clean & Modern Washrooms</div>
+                </div>
+                <div class="gallery-item">
+                     <!-- This image will appear broken in preview -->
+                    <img src="11.jpg" alt="Secure Private Parking (50+ Cars)" onerror="this.parentElement.innerHTML = '<div class=\'gallery-placeholder\'>Image Missing:<br>11.jpg</div>';">
+                    <div class="gallery-caption">Secure Private Parking (50+ Cars)</div>
+                </div>
+                <div class="gallery-item">
+                     <!-- This image will appear broken in preview -->
+                    <img src="12.jpg" alt="Spacious Bridal Dressing Room" onerror="this.parentElement.innerHTML = '<div class=\'gallery-placeholder\'>Image Missing:<br>12.jpg</div>';">
+                    <div class="gallery-caption">Spacious Bridal Dressing Room</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section id="video-tour" style="background: #f5f7fa;">
+        <h2 class="animate-on-scroll">Take a Virtual Tour</h2>
+        <p style="text-align: center; font-size: 1.2rem; margin-bottom: 2rem; max-width: 800px; margin-left: auto; margin-right: auto;" class="animate-on-scroll">
+            Words and photos can only show so much. Watch our short video to experience the space and ambiance of Vinayak Garden for yourself.
+        </p>
+        <div class="video-container animate-on-scroll" style="max-width: 1000px; margin: 0 auto; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); background: #000;">
+            <video controls poster="https://placehold.co/1600x900/520000/ffffff?text=Click+to+Play+Venue+Tour" /* Changed */ style="width: 100%; display: block;">
+                 <!-- This video will appear broken in preview -->
+                <source src="Vinayak.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </section>
+    <section id="venue">
+        <h2 class="animate-on-scroll">Venue at a Glance</h2>
+        <p style="text-align: center; font-size: 1.2rem; margin-bottom: 2rem;" class="animate-on-scroll">All the key details you need to plan your perfect event.</p>
+
+        <!-- --- NEW BROCHURE DOWNLOAD BUTTON --- -->
+        <div style="text-align: center; margin-bottom: 3rem;" class="animate-on-scroll">
+            <!-- This link assumes 'VINAYAK_GARDEN_Brochure.pdf' is in the same folder as your index.html -->
+            <a href="VINAYAK_GARDEN_Brochure.pdf" class="btn btn-primary" style="background: #8c4400;" download>
+                📥 Download Brochure
+            </a>
+        </div>
+        <!-- --- END NEW BUTTON --- -->
+
+        <div class="specs-container animate-on-scroll">
+            <div class="spec-box">
+                <h3>Main AC Hall</h3>
+                <h4>A spacious, pillar-less hall designed for grand celebrations.</h4>
+                <ul>
+                    <li><strong>Seated (Banquet) Capacity:</strong> 300 Guests</li>
+                    <li><strong>Floating (Standing) Capacity:</strong> 500+ Guests</li>
+                    <li><strong>Best For:</strong> Weddings, Receptions, Corporate Events</li>
+                    <li><strong>Features:</strong> Fully Air-Conditioned, Grand Stage, Separate Bridal Dressing Room</li>
+                </ul>
+            </div>
+
+            <div class="spec-box">
+                <h3>Open-Air Lawn</h3>
+                <h4>A beautiful, lush green space for outdoor functions.</h4>
+                <ul>
+                    <li><strong>Capacity:</strong> 150+ Guests</li>
+                    <li><strong>Best For:</strong> Sangeet, Mehendi, Birthday Parties, Buffet Setups</li>
+                    <li><strong>Features:</strong> Full Night-Time Lighting, Power Hookups for Music</li>
+                </ul>
+            </div>
+
+            <div class="spec-box">
+                <h3>Amenities & Parking</h3>
+                <ul>
+                    <li><strong>Parking:</strong> Secure, private parking available for 50+ cars and 100+ bikes</li>
+                    <li><strong>Washrooms:</strong> 4x Modern and clean washrooms for ladies, 4x for gents</li>
+                    <li><strong>Catering:</strong> Flexible. You can use your own preferred caterer or our in-house panel</li>
+                    <li><strong>Decoration:</strong> Flexible. You can use your own decorator or our in-house panel</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="animate-on-scroll">Book Your Event / Contact Us</h2>
+
+        <div style="margin-bottom: 3rem;" class="animate-on-scroll">
+            <h3 style="text-align: center; font-size: 1.8rem; margin-bottom: 1.5rem; color: #520000;">📍 Find Us on Map</h3>
+            <div style="border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3654.8825894869775!2d87.05795397516742!3d23.635916878721917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f7c3f8d4c0a0a1%3A0x7e4c3f8d4c0a0a1!2sVinayak%20Garden!5e0!3m2!1sen!2sin!4v1698765432109!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+            <p style="text-align: center; margin-top: 1rem;">
+                <a href="https://maps.app.goo.gl/iNaTQjzNwZkzs7qj8" target="_blank" style="color: #520000; font-weight: 600; text-decoration: none; font-size: 1.1rem;"> 🧭 Open in Google Maps App →
+                </a>
+            </p>
+        </div>
+        
+        <div class="contact-container animate-on-scroll">
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                
+                <div class="contact-item">
+                    <div>
+                        <strong>📞 Phone</strong>
+                        <!-- 2. Updated placeholder to your real number -->
+                        <p>+91 6294283423</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Call us anytime between 9 AM - 9 PM</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div>
+                        <strong>📧 Email</strong>
+                        <p>booking@vinayakgarden.com<br>info@vinayakgarden.com</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div>
+                        <strong>📍 Address</strong>
+                        <p>Vinayak Garden(Banquet Hall)<br>Bankura, West Bengal<br>India - 722101</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div>
+                        <strong>🕐 Visit Us</strong>
+                        <p>Monday - Sunday: 9:00 AM - 9:00 PM</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Walk-ins welcome! Schedule a venue tour anytime.</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div>
+                        <strong>🗺️ Find Us on Map</strong>
+                        <a href="httpsG://maps.app.goo.gl/iNaTQjzNwZkzs7qj8" target="_blank" class="btn btn-secondary" style="display: inline-block; margin-top: 0.5rem; padding: 0.7rem 1.5rem; font-size: 1rem; color: white; border-color: white;">Open in Google Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="booking-form">
+                <h3 style="margin-bottom: 1.5rem; color: #520000;">Quick Booking Inquiry</h3>
+                <div class="success-message" id="successMessage">
+                    Thank you! We've received your inquiry and will contact you shortly.
+                </div>
+                
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeZ07XNIkniPXtMGnr0RSjtsfwA1cTjHxSrhmc3kxRg-kOVdQ/viewform?usp=sharing&ouid=104183638767916899108" width="100%" height="1000" frameborder="0" marginheight="0" marginwidth="0" style="border-radius: 10px;">
+                    Loading…
+                </iframe>
+                
+                <p style="text-align: center; margin-top: 1rem; color: #666;">
+                    Or <a href="https://docs.google.com/forms/d/e/1FAIpQLSeZ07XNIkniPXtMGnr0RSjtsfwA1cTjHxSrhmc3kxRg-kOVdQ/viewform?usp=sharing&ouid=104183638767916899108" target="_blank" style="color: #520000; font-weight: 600;">open form in new tab</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Vinayak Garden. All rights reserved.</p>
+        <p style="margin-top: 0.5rem;">Bankura's Premier AC Banquet Hall & Open Lawn</p>
+    </footer>
+
+    <div class="floating-cta">
+        <!-- 3. Updated placeholder to your real number -->
+        <a href="tel:+916294283423" class="floating-btn call-btn">
+            📞 Call Now
+        </a>
+        <a href="#contact" class="floating-btn">
+            📅 Book Event
+        </a>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // --- NEW: Animate on Scroll ---
+        // Create an observer to watch for elements entering the viewport
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                // If the element is visible
+                if (entry.isIntersecting) {
+                    // Add the 'is-visible' class to trigger the animation
+                    entry.target.classList.add('is-visible');
+                    // Stop observing the element so it only animates once
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1 // Trigger when 10% of the element is visible
+        });
+
+        // Find all elements with the 'animate-on-scroll' class
+        const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+        // Tell the observer to watch each of them
+        elementsToAnimate.forEach((el) => observer.observe(el));
+        // --- End Animate on Scroll ---
+    </script>
+</body>
+</html>
+
+
